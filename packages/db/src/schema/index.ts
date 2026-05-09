@@ -78,3 +78,4 @@ export { pluginLogs } from "./plugin_logs.js";
 export { clusterConnections } from "./cluster_connections.js";
 export { clusterNamespaceBindings } from "./cluster_namespace_bindings.js";
 export { clusterTenantPolicies } from "./cluster_tenant_policies.js";
+export { bootstrapTokens } from "./bootstrap_tokens.js";

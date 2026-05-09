@@ -596,6 +596,13 @@
       "when": 1778275765114,
       "tag": "0084_cluster_connections",
       "breakpoints": true
+    },
+    {
+      "idx": 83,
+      "version": "7",
+      "when": 1778319034954,
+      "tag": "0083_bootstrap_tokens",
+      "breakpoints": true
     }
   ]
 }
