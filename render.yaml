@@ -1,0 +1,32 @@
+# Render Blueprint for the Chappieworks studio's Paperclip instance.
+# Deploy: Render Dashboard → New → Blueprint → pick this repo → Apply.
+# Runs the Docker image with its embedded Postgres persisted to a disk at /paperclip.
+services:
+  - type: web
+    name: paperclip-chappieworks
+    runtime: docker
+    branch: master
+    region: oregon
+    plan: starter            # NOT free — free sleeps after 15m idle and kills the live read
+    dockerfilePath: ./Dockerfile
+    autoDeploy: false        # deploy on demand; pin a SHA you trust
+    healthCheckPath: /api/health
+    disk:
+      name: paperclip-data   # embedded Postgres + instance data live here; survives deploys
+      mountPath: /paperclip
+      sizeGB: 5
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PAPERCLIP_HOME
+        value: /paperclip
+      - key: PAPERCLIP_DEPLOYMENT_MODE
+        value: authenticated
+      - key: PAPERCLIP_DEPLOYMENT_EXPOSURE
+        value: public        # public READ of the queue; writes/agent-exec stay auth-gated
+      - key: PAPERCLIP_PUBLIC_URL
+        value: https://paperclip.chappieworks.com
+      - key: BETTER_AUTH_SECRET
+        generateValue: true  # Render generates a high-entropy secret
+      - key: ANTHROPIC_API_KEY
+        sync: false           # add only if you want the HOSTED instance to run agents
